@@ -26,6 +26,7 @@ public class UnitController : MonoBehaviour
         {
             return;
         }
+
         if (GameManager.Instance.gameState == GameManager.GameState.Pause)
         {
             pausa = true;
@@ -34,6 +35,7 @@ public class UnitController : MonoBehaviour
         {
             pausa = false;
         }
+
         if (Input.GetMouseButtonDown(0) && isAlive && !pausa)
         {
             ruta = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -43,10 +45,12 @@ public class UnitController : MonoBehaviour
 
             }
         }
+
         if(pausa)
         {
             unidad.SetDestination(transform.position);
         }
+        
         if (unidad.remainingDistance > unidad.stoppingDistance)
         {
             character.Move(unidad.desiredVelocity, false, false);
@@ -55,7 +59,19 @@ public class UnitController : MonoBehaviour
         {
             character.Move(Vector3.zero, false, false);
         }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Attack();
+        }
     }
+
+    public void Attack()
+    {
+        character.Move(Vector3.zero, false, false);
+        character.Attack();
+    }
+
     public void Kill()
     {
         if (isAlive)
