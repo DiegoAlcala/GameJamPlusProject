@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3038019904374336401}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.65, y: 0, z: -13.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -125,7 +125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   Unit: {fileID: 0}
-  point: []
+  point:
+  - {fileID: 0}
+  - {fileID: 0}
   terreno:
     serializedVersion: 2
     m_Bits: 64
@@ -136,7 +138,7 @@ MonoBehaviour:
   character: {fileID: 3038019904374336400}
   timePassed: 0
   attackTime: 0
-  attackRange: 5
+  attackRange: 0.9
 --- !u!95 &3038019904374336403
 Animator:
   serializedVersion: 5
@@ -223,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visionAngle: 45
-  maxVisionDistance: 20
+  maxVisionDistance: 5
   nearVisionAngle: 45
   maxNearVisionDistance: 5
   visionColor: {r: 0, g: 0.015290737, b: 1, a: 0.19607843}
