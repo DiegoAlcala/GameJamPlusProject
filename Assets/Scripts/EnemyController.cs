@@ -6,6 +6,12 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class EnemyController : MonoBehaviour
 {
+    public enum EnemyType
+    {
+        Shooter,
+        Melee
+    }
+    public EnemyType enemyType;
     private UnityEngine.AI.NavMeshAgent unidadE;
     public Transform Unit;
     public Transform[] point;
@@ -16,19 +22,35 @@ public class EnemyController : MonoBehaviour
     private int siguienteDestino;
     public float contador;
     public ThirdPersonCharacter character;
-    
-    
-    
+
+    public float timePassed;
+    public float attackTime;
+    public float attackRange;
+
 
     void Start()
     {
         unidadE = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
         unidadE.updateRotation = false;
+        InitializeEnemyBehavior();
 
+    }
+    void InitializeEnemyBehavior()
+    {
+        switch (enemyType)
+        {
+            case EnemyType.Shooter:
+                // Configura el comportamiento del enemigo tirador.
+                break;
+            case EnemyType.Melee:
+                // Configura el comportamiento del enemigo cuerpo a cuerpo.
+                break;
+        }
     }
 
     void Update()
     {
+
         if (GameManager.Instance.gameState == GameManager.GameState.Idle)
         {
             return;
@@ -42,23 +64,48 @@ public class EnemyController : MonoBehaviour
         {
             character.Move(Vector3.zero, false, false);
         }
+
+        // Si el jugador está dentro del rango de ataque, ataca.
     }
     public void Perseguir()
     {
-        destino = Unit.position;
-        if (Unit.gameObject.CompareTag("Unit"))
+        if (Unit.gameObject.CompareTag("Unit") && timePassed >= attackTime)
         {
-            Unit.gameObject.GetComponent<UnitController>().Kill();
+
+            //Unit.gameObject.GetComponent<UnitController>().Kill();
             Debug.Log("Seen");
-            unidadE.SetDestination(transform.position);
+            unidadE.SetDestination(Unit.gameObject.transform.position);
+            destino = Unit.position;
             transform.LookAt(destino);
+        float distanceToPlayer = Vector3.Distance(transform.position, Unit.position);
 
-        }
-        
+        // Comprueba si el jugador está dentro del rango de ataque.
+        if (distanceToPlayer <= attackRange)
+        {
+                Attack();
+            // El jugador está dentro del rango de ataque.
+            // Puedes realizar acciones como iniciar un ataque o activar animaciones aquí.
+            }
 
-        
+
+        }        
     }
-    
+    public void Attack()
+    {
+        //detener el personaje 
+        Debug.Log("Active la animacion");
+        //Animacion de atacar
+        //animator.SetTrigger("attack");
+        timePassed = 0;
+        Invoke("Perder", 2f);
+        //audioManager.PlayAudioClip(audioManager.RandomiseSounds(attackBossSounds), audioSourceAttacks);
+    }
+    public void Perder()
+    {
+        Debug.Log("Pantalla de derrota");
+        //Unit.gameObject.GetComponent<UnitController>().Kill();
+    }
+
     public void patrullar()
     {
         
@@ -84,6 +131,11 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+    }
+    bool IsPlayerInAttackRange()
+    {
+        // Verifica si el jugador está dentro del rango de ataque.
+        return Vector3.Distance(transform.position, Unit.position) <= attackRange;
     }
 
 }
