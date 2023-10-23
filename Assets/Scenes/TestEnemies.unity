@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1955,6 +1955,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3234520896653847049, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: ab9d75e2968dcfb429f797cfa23ef195, type: 3}
+    - target: {fileID: 3234520896653847049, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4c5e1d12ff7f2e449bf7be7276bafb70, type: 2}
     - target: {fileID: 4190710634469516574, guid: d4a0f9df018a8d344b541690e9749dd1,
         type: 3}
       propertyPath: m_Name
@@ -2010,11 +2020,47 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5180192182816365877, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: aggroRange
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180192182816365877, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: attackTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180192182816365877, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: attackRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180192182816365877, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: fuerzaEmpuje
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180192182816365877, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: tiempoEspera
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180192182816365877, guid: d4a0f9df018a8d344b541690e9749dd1,
+        type: 3}
+      propertyPath: audioSourceSFXBoss
+      value: 
+      objectReference: {fileID: 1938801636310884792}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4a0f9df018a8d344b541690e9749dd1, type: 3}
+--- !u!82 &1938801636310884792 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2345549453251893238, guid: d4a0f9df018a8d344b541690e9749dd1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1938801636310884791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3146959172220220655
 PrefabInstance:
   m_ObjectHideFlags: 0
