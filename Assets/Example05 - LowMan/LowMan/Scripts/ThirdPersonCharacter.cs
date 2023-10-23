@@ -18,7 +18,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
-		bool m_IsGrounded;
+		public bool m_IsGrounded;
 		float m_OrigGroundCheckDistance;
 		const float k_Half = 0.5f;
 		float m_TurnAmount;
@@ -70,9 +70,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			ScaleCapsuleForCrouching(crouch);
 			PreventStandingInLowHeadroom();
-
-			// send input and other state parameters to the animator
-			UpdateAnimator(move);
 		}
 
 
@@ -115,7 +112,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		void UpdateAnimator(Vector3 move)
+		public void UpdateAnimator()
 		{
 			// update the animator parameters
 			m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
@@ -141,15 +138,15 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			// the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
 			// which affects the movement speed because of the root motion.
-			if (m_IsGrounded && move.magnitude > 0)
-			{
-				m_Animator.speed = m_AnimSpeedMultiplier;
-			}
-			else
-			{
-				// don't use that while airborne
-				m_Animator.speed = 1;
-			}
+			//if (m_IsGrounded && move.magnitude > 0)
+			//{
+			//	m_Animator.speed = m_AnimSpeedMultiplier;
+			//}
+			//else
+			//{
+			//	// don't use that while airborne
+			//	m_Animator.speed = 1;
+			//}
 		}
 
 

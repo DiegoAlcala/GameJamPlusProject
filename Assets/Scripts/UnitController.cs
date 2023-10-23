@@ -21,7 +21,9 @@ public class UnitController : MonoBehaviour
         {
             return;
         }
-
+        
+        character.UpdateAnimator();
+       
         if (Input.GetMouseButtonDown(0) && isAlive && !isAttack)
         {
             ruta = Camera.main.ScreenPointToRay(Input.mousePosition);
