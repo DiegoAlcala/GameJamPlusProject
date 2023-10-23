@@ -5,92 +5,62 @@ using Cinemachine;
 
 public class CameraSystem : MonoBehaviour
 {
-
-   [SerializeField] private CinemachineVirtualCamera Camera;
-   private bool rotateCam = false;
-   private float fov = 60;
-   private float fovMax = 100;
-   private float fovMin = 10;
-   public bool alive;
-   public bool pausa;
-
-   private void Awake() {
-     
-   }
-
-
+    [SerializeField] private CinemachineVirtualCamera Camera;
+    public bool rotateCam;
+    public bool isActive;
+    public Vector2 boundaries;
+    private float fov = 60;
+    private float fovMax = 100;
+    private float fovMin = 10;
 
    private void Update() 
    {
-      alive = VisionManager.instance.Unit.gameObject.GetComponent<UnitController>().isAlive;
-
-      if (GameManager.Instance.gameState == GameManager.GameState.Idle)
-      {
-         return;
-      }
-      if (GameManager.Instance.gameState == GameManager.GameState.Pause)
-      {
-         pausa = true;
-      }
-      if(Input.GetKeyDown(KeyCode.LeftControl))
-      {
-         rotateCam = true;
-      }
-      if(Input.GetKeyUp(KeyCode.LeftControl))
-      {
-         rotateCam = false;
-      }
-      if(alive && !pausa)
+      if(isActive)
       {
          CameraMovement();
       }
+
       if (rotateCam == false)
       {
          CameraZoom();
       }
+
       if (rotateCam == true)
       {
          CameraRotation();
       }
-      
    }
-   private void CameraMovement() 
-   {
+
+    private void CameraMovement() 
+    {
+        int edgeMoveSize = 30;
+        Vector3 inputDir = new Vector3(0,0,0);
+
+        if(Input.mousePosition.x < edgeMoveSize) 
+        {
+            inputDir.x = -1f;
+        }
     
+        if(Input.mousePosition.y < edgeMoveSize) 
+        {
+            inputDir.z = -1f;
+        }
+        
+        if(Input.mousePosition.x > Screen.width - edgeMoveSize) 
+        {
+            inputDir.x = +1f;
+        }
+        
+        if(Input.mousePosition.y > Screen.height - edgeMoveSize) 
+        {
+            inputDir.z = +1f;
+        }
 
-   
-   //  if(Input.GetKey(KeyCode.W)) inputDir.z = +1f; 
-   //  if(Input.GetKey(KeyCode.S)) inputDir.z = -1f; 
-   //  if(Input.GetKey(KeyCode.A)) inputDir.x = -1f; 
-   //  if(Input.GetKey(KeyCode.D)) inputDir.x = +1f; 
+        Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
 
-    int edgeMoveSize = 30;
-    Vector3 inputDir = new Vector3(0,0,0);
-
-    if(Input.mousePosition.x < edgeMoveSize) 
-    {
-      inputDir.x = -1f;
+        float moveSpeed = 10f;
+        transform.position += moveDir * moveSpeed *Time.deltaTime;
     }
-    if(Input.mousePosition.y < edgeMoveSize) 
-    {
-      inputDir.z = -1f;
-    }
-    if(Input.mousePosition.x > Screen.width - edgeMoveSize) 
-    {
-      inputDir.x = +1f;
-    }
-    if(Input.mousePosition.y > Screen.height - edgeMoveSize) 
-    {
-      inputDir.z = +1f;
-    }
-
-    Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
-
-    float moveSpeed = 10f;
-    transform.position += moveDir * moveSpeed *Time.deltaTime;
-
-   
-   }
 
    private void CameraRotation() //arreglar rotacion, tiene un pumping bastante fuerte
    {

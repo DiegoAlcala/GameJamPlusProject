@@ -184,8 +184,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 		public void Attack()
         {
+			Move(Vector3.zero, false, false);
 			m_Animator.SetTrigger("Attack");
-        }
+		}
 
 		public void OnAnimatorMove()
 		{

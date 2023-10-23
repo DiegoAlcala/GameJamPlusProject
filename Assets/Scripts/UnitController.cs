@@ -7,18 +7,13 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class UnitController : MonoBehaviour
 {
     public LayerMask terreno;
-    private NavMeshAgent unidad;    
+    public NavMeshAgent unidad;    
     private Ray ruta; 
     private RaycastHit destino;
-    public bool isAlive = true;
-    public bool pausa;
+    public bool isAlive;
+    public bool isAttack;
+    public bool isMoving;
     public ThirdPersonCharacter character;
-
-    void Start()
-    {
-        unidad = this.GetComponent<NavMeshAgent>();
-        unidad.updateRotation = false;
-    }
 
     void Update()
     {
@@ -27,40 +22,32 @@ public class UnitController : MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance.gameState == GameManager.GameState.Pause)
-        {
-            pausa = true;
-        }
-        else
-        {
-            pausa = false;
-        }
-
-        if (Input.GetMouseButtonDown(0) && isAlive && !pausa)
+        if (Input.GetMouseButtonDown(0) && isAlive && !isAttack)
         {
             ruta = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ruta,out destino,100,terreno))
             {
                 unidad.SetDestination(destino.point);
-
+                isMoving = true;
             }
         }
 
-        if(pausa)
-        {
-            unidad.SetDestination(transform.position);
-        }
+        //if(pausa)
+        //{
+        //    unidad.SetDestination(transform.position);
+        //}
         
-        if (unidad.remainingDistance > unidad.stoppingDistance)
+        if (unidad.remainingDistance > unidad.stoppingDistance && isMoving)
         {
             character.Move(unidad.desiredVelocity, false, false);
         }
         else
         {
+            isMoving = false;
             character.Move(Vector3.zero, false, false);
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && !isMoving)
         {
             Attack();
         }
@@ -68,7 +55,7 @@ public class UnitController : MonoBehaviour
 
     public void Attack()
     {
-        character.Move(Vector3.zero, false, false);
+        isAttack = true;
         character.Attack();
     }
 
