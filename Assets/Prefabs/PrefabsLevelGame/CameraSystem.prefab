@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
   rotateCam: 0
-  isActive: 0
-  boundaries: {x: 0, y: 0}
+  isActive: 1
+  boundaries: {x: 30, y: 30}

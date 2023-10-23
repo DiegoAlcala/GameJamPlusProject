@@ -9,11 +9,14 @@ public class CameraSystem : MonoBehaviour
     public bool rotateCam;
     public bool isActive;
     public Vector2 boundaries;
+    public float moveSpeed = 10f;
     private float fov = 60;
     private float fovMax = 100;
     private float fovMin = 10;
+    private int edgeMoveSize = 30;
+    public float maxMoveMagnitude;
 
-   private void Update() 
+    private void Update() 
    {
       if(isActive)
       {
@@ -33,7 +36,6 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraMovement() 
     {
-        int edgeMoveSize = 30;
         Vector3 inputDir = new Vector3(0,0,0);
 
         if(Input.mousePosition.x < edgeMoveSize) 
@@ -57,9 +59,9 @@ public class CameraSystem : MonoBehaviour
         }
 
         Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
+        moveDir = Vector3.ClampMagnitude(moveDir, maxMoveMagnitude); // Limita el movimiento
 
-        float moveSpeed = 10f;
-        transform.position += moveDir * moveSpeed *Time.deltaTime;
+        transform.position += moveDir * moveSpeed * Time.deltaTime;
     }
 
    private void CameraRotation() //arreglar rotacion, tiene un pumping bastante fuerte
