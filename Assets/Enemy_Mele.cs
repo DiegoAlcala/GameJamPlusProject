@@ -7,10 +7,7 @@ public class Enemy_Mele : Enemy_D
     GameObject power;
 
 
-    // Sounds
-    //public AudioManager audioManager;
-    public AudioSource audioSourceAttacks;
-    public AudioClip[] attackBossSounds;
+
 
 
     protected override void AttackEnemy()

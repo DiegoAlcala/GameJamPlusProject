@@ -8,17 +8,6 @@ public abstract class Enemy_D : MonoBehaviour
     // Variable de vida para todos los enemigos
     [SerializeField] public float health = 3;
 
-    [SerializeField] public GameObject damageText;
-
-    [SerializeField] float resetHeath;
-    [SerializeField] float resetSpeed;
-
-    // Variable para el efecto visual cusndo el enemigo sea golpeado
-    [SerializeField] GameObject hitVFX;
-
-    // MiniMap Indicator:
-    [SerializeField] GameObject miniMapIndicator;
-
     [Header("Combat")]
     // Tiempo entre los ataques
     public float attackTime = 0.1f;
@@ -34,15 +23,15 @@ public abstract class Enemy_D : MonoBehaviour
     protected float timePassed;
     protected float newDestinationCD = 1f;
 
-    public AudioSource audioSourceSFXBoss;
-    public AudioClip[] damageBossSounds;
+    public float tiempoEspera;
+    private int siguienteDestino;
+    public float contador;
+    public Transform[] point;
 
 
     private void Awake()
     {
-        resetHeath = health;
         agent = GetComponent<NavMeshAgent>();
-        resetSpeed = agent.speed;
     }
     private void LateUpdate()
     {
@@ -54,7 +43,7 @@ public abstract class Enemy_D : MonoBehaviour
         }
         if (animator.GetBool("isDeath") == false)
         {
-            MoveEnemy();
+            Patrol();
             AttackEnemy();
             Obser();
         }
@@ -63,8 +52,34 @@ public abstract class Enemy_D : MonoBehaviour
     void InitializeVariables()
     {
         //agent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Unit");
         animator = GetComponent<Animator>();
+
+    }
+    public void Patrol()
+    {
+
+        if (contador < tiempoEspera)
+        {
+            contador = contador + 1 * Time.deltaTime;
+        }
+        if (contador >= tiempoEspera)
+        {
+            agent.SetDestination(point[siguienteDestino].transform.position);
+        }
+        Vector3 distanciaDestino = point[siguienteDestino].transform.position - this.transform.position;
+        if (Mathf.Abs(distanciaDestino.x) < 0.1f && Mathf.Abs(distanciaDestino.z) < 0.1f)
+        {
+            contador = 0;
+            if (siguienteDestino < point.Length - 1)
+            {
+                siguienteDestino++;
+            }
+            else if (siguienteDestino == point.Length - 1)
+            {
+                siguienteDestino = 0;
+            }
+        }
 
     }
 
